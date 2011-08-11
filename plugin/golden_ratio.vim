@@ -4,7 +4,6 @@ set cpo&vim
 if exists("g:loaded_golden_ratio")
   finish
 endif
-echom "Loading Golden Ratio"
 let g:loaded_golden_ratio = 1
 
 function! s:GoldenRatioWidth()
@@ -30,7 +29,7 @@ function! s:ResizeToGoldenRatio()
   " check that the height of the (editor - current window)
   " is smaller than b. If thats the case, we just give the
   " window full height length.
-  " check :help golden_ratio
+  " check |help golden-ratio-intro|
   let l:currentHeight = winheight("%")
   if (&lines - l:currentHeight) < l:bh
     let l:height = "resize"
