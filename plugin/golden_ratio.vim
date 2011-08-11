@@ -44,16 +44,18 @@ function! s:ResizeToGoldenRatio()
 endfunction
 
 " Do plugin mappings
-nnoremap <Plug>GoldenRatioResize :call <SID>ResizeToGoldenRatio()<CR>
 
 if !hasmapto('<Plug>GoldenRatioResize') &&
-      \ !hasmapto('<LEADER>g', 'n')
-  nnoremap <unique> <LEADER>g <Plug>GoldenRationResize
+      \ !mapcheck('<LEADER>g', 'n')
+
+  nmap <silent> <LEADER>g <Plug>GoldenRatioResize
 endif
+
+map <Plug>GoldenRatioResize :call <SID>ResizeToGoldenRatio()<CR>
 
 if !exists("g:golden_ratio_autocommand") || 
       \ (exists("g:golden_ratio_autocommand") &&
-      \  g:golden_ratio_autocommands)
+      \  g:golden_ratio_autocommand)
 
   au WinEnter,BufEnter * call <SID>ResizeToGoldenRatio()
 endif
