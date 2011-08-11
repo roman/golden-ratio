@@ -16,8 +16,29 @@ function! s:GoldenRatioHeight()
 endfunction
 
 function! s:ResizeToGoldenRatio()
-  let l:height = printf("resize %f", s:GoldenRatioHeight())
-  let l:width  = printf("vertical resize %f", s:GoldenRatioWidth())
+  let l:ah = s:GoldenRatioHeight()
+  let l:bh = (l:ah / 1.618)
+
+  let l:aw = s:GoldenRatioWidth()
+  let l:bw = (l:aw / 1.618)
+
+  " Height has an special condition:
+  " When there is only one window, or just windows
+  " with a vertical split, the 'command window'
+  " gets all the space for the shorter size of the
+  " golden ratio (b), in order to avoid this, we just
+  " check that the height of the (editor - current window)
+  " is smaller than b. If thats the case, we just give the
+  " window full height length.
+  " check :help golden_ratio
+  let l:currentHeight = winheight("%")
+  if (&lines - l:currentHeight) < l:bh
+    let l:height = "resize"
+  else
+    let l:height = printf("resize %f", l:ah)
+  endif
+
+  let l:width  = printf("vertical resize %f", l:aw)
 
   exec l:width
   exec l:height
