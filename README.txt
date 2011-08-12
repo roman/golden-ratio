@@ -57,7 +57,7 @@ This plugin was developed by Roman Gonzalez (romanandreg [at] gmail.com), if
 you have any suggestions to improve the code/functionality please send an email
 or even better, send a pull request to the github repo:
 
-http://github.com/roman/golden_ratio
+http://github.com/roman/golden-ratio
 
 Thanks particuarly to ujihisa for the inspiration to develop this plugin.
 
@@ -66,3 +66,6 @@ Thanks particuarly to ujihisa for the inspiration to develop this plugin.
 
 golden-ratio is relased under the MIT license.
 check LICENSE file
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:
