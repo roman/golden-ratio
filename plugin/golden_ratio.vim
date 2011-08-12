@@ -6,19 +6,19 @@ if exists("g:loaded_golden_ratio")
 endif
 let g:loaded_golden_ratio = 1
 
-function! s:GoldenRatioWidth()
+function! s:golden_ratio_width()
   return (&columns / 1.618)
 endfunction
 
-function! s:GoldenRatioHeight()
+function! s:golden_ratio_height()
   return (&lines / 1.618)
 endfunction
 
-function! s:ResizeToGoldenRatio()
-  let l:ah = s:GoldenRatioHeight()
+function! s:resize_to_golden_ratio()
+  let l:ah = s:golden_ratio_height()
   let l:bh = (l:ah / 1.618)
 
-  let l:aw = s:GoldenRatioWidth()
+  let l:aw = s:golden_ratio_width()
   let l:bw = (l:aw / 1.618)
 
   " Height has an special condition:
@@ -30,8 +30,8 @@ function! s:ResizeToGoldenRatio()
   " is smaller than b. If thats the case, we just give the
   " window full height length.
   " check |help golden-ratio-intro|
-  let l:currentHeight = winheight("%")
-  if (&lines - l:currentHeight) < l:bh
+  let l:current_height = winheight("%")
+  if (&lines - l:current_height) < l:bh
     let l:height = "resize"
   else
     let l:height = printf("resize %f", l:ah)
@@ -51,14 +51,14 @@ if !hasmapto('<Plug>(golden_ratio_resize)') &&
   nmap <silent> <LEADER>g <Plug>(golden_ratio_resize)
 endif
 
-nnoremap <Plug>(golden_ratio_resize) :<C-u>call <SID>ResizeToGoldenRatio()<CR>
-inoremap <Plug>(golden_ratio_resize) <Esc>:call <SID>ResizeToGoldenRatio()<CR>a
+nnoremap <Plug>(golden_ratio_resize) :<C-u>call <SID>resize_to_golden_ratio()<CR>
+inoremap <Plug>(golden_ratio_resize) <Esc>:call <SID>resize_to_golden_ratio()<CR>a
 
 if !exists("g:golden_ratio_autocommand") || 
       \ (exists("g:golden_ratio_autocommand") &&
       \  g:golden_ratio_autocommand)
 
-  au WinEnter,BufEnter * call <SID>ResizeToGoldenRatio()
+  au WinEnter,BufEnter * call <SID>resize_to_golden_ratio()
 endif
 
 let &cpo = s:save_cpo
