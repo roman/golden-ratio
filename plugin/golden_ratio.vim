@@ -45,14 +45,14 @@ endfunction
 
 " Do plugin mappings
 
-if !hasmapto('<Plug>GoldenRatioResize') &&
+if !hasmapto('<Plug>(golden_ratio_resize)') &&
       \ !mapcheck('<LEADER>g', 'n')
 
-  nmap <silent> <LEADER>g <Plug>GoldenRatioResize
+  nmap <silent> <LEADER>g <Plug>(golden_ratio_resize)
 endif
 
-nnoremap <Plug>GoldenRatioResize :<C-u>call <SID>ResizeToGoldenRatio()<CR>
-inoremap <Plug>GoldenRatioResize <Esc>:call <SID>ResizeToGoldenRatio()<CR>a
+nnoremap <Plug>(golden_ratio_resize) :<C-u>call <SID>ResizeToGoldenRatio()<CR>
+inoremap <Plug>(golden_ratio_resize) <Esc>:call <SID>ResizeToGoldenRatio()<CR>a
 
 if !exists("g:golden_ratio_autocommand") || 
       \ (exists("g:golden_ratio_autocommand") &&

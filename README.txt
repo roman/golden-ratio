@@ -46,7 +46,7 @@ Use this option to disable the autocommand events for golden ratio
 3. Mappings                                             *golden-ratio-mappings*
 
                                                         *golden-ratio-resize*
-<Plug>GoldenRatioResize
+<Plug>(golden_ratio_resize)
   It will perform the resizing of the current window to the golden ratio, by
   default is mapped to <LEADER>g if not mapped already.
 
