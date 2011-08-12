@@ -52,6 +52,7 @@ if !hasmapto('<Plug>GoldenRatioResize') &&
 endif
 
 nnoremap <Plug>GoldenRatioResize :<C-u>call <SID>ResizeToGoldenRatio()<CR>
+inoremap <Plug>GoldenRatioResize <Esc>:call <SID>ResizeToGoldenRatio()<CR>a
 
 if !exists("g:golden_ratio_autocommand") || 
       \ (exists("g:golden_ratio_autocommand") &&
