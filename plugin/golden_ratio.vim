@@ -14,12 +14,53 @@ function! s:golden_ratio_height()
   return &lines / 1.618
 endfunction
 
-function! s:resize_to_golden_ratio()
-  let l:ah = s:golden_ratio_height()
-  let l:bh = l:ah / 1.618
+function! s:find_parallel_windows(current_window)
+  return {
+         \ 'width' : filter(reverse(range(1, winnr('$'))),
+           \ 'winheight(v:val) == winheight(a:current_window) ' .
+           \ '&& v:val != a:current_window'),
+         \ 'height': filter(reverse(range(1, winnr('$'))),
+           \ 'winwidth(v:val) == winwidth(a:current_window) ' .
+           \ '&& v:val != a:current_window')
+        \}
+endfunction
 
-  let l:aw = s:golden_ratio_width()
-  let l:bw = l:aw / 1.618
+function! s:resize_ignored_window(windows, ignored_width, ignored_height)
+  setl nowrap
+
+  if len(a:windows.width) > 0 && index(a:windows.width, winnr()) >= 0
+    let l:width_size = a:ignored_width / len(a:windows.width)
+    exec printf("vertical resize %f", l:width_size)
+  endif
+
+  if len(a:windows.height) > 0 && index(a:windows.height, winnr()) >= 0
+    let l:current_height = winheight(winnr())
+    " This is when you are having a vertical setup
+    if &lines - l:current_height < a:ignored_height
+      exec "resize"
+    else
+      let l:height_size = a:ignored_height / len(a:windows.height)
+      exec printf("resize %f", l:height_size)
+    endif
+  endif
+
+endfunction
+
+function! s:resize_ignored_windows(windows, ignored_width, ignored_height)
+  let l:current_window = winnr()
+  let b:golden_ratio_resizing_ignored = 1
+  for window in range(1, winnr('$'))
+    exec window . "wincmd w"
+    call s:resize_ignored_window(a:windows, a:ignored_width, a:ignored_height)
+  endfor
+  exec l:current_window . "wincmd w"
+  let b:golden_ratio_resizing_ignored = 0
+endfunction
+
+function! s:resize_main_window(window,
+      \ main_width, main_height,
+      \ ignored_width, ignored_height)
+  setl wrap
 
   " Height has an special condition:
   " When there is only one window, or just windows
@@ -30,26 +71,36 @@ function! s:resize_to_golden_ratio()
   " is smaller than b. If thats the case, we just give the
   " window full height length.
   " check |help golden-ratio-intro|
-  let l:current_height = winheight("%")
-  if &lines - l:current_height < l:bh
+  let l:current_height = winheight(a:window)
+  if &lines - l:current_height < a:ignored_height
     let l:height = "resize"
   else
-    let l:height = printf("resize %f", l:ah)
+    let l:height = printf("resize %f", a:main_height)
   endif
-
-  let l:width  = printf("vertical resize %f", l:aw)
+  let l:width  = printf("vertical resize %f", a:main_width)
 
   exec l:width
   exec l:height
 endfunction
 
+function! s:resize_to_golden_ratio()
+  if exists("b:golden_ration_resizing_ignored") &&
+        \ b:golden_ratio_resizing_ignored
+    return
+  endif
+
+  let l:ah = s:golden_ratio_height()
+  let l:bh = l:ah / 1.618
+
+  let l:aw = s:golden_ratio_width()
+  let l:bw = l:aw / 1.618
+
+  let l:parallel_windows = s:find_parallel_windows(winnr())
+  call s:resize_ignored_windows(l:parallel_windows, l:bw, l:bh)
+  call s:resize_main_window(winnr(), l:aw, l:ah, l:bw, l:bh)
+endfunction
+
 " Do plugin mappings
-
-if !hasmapto('<Plug>(golden_ratio_resize)') &&
-      \ !mapcheck('<LEADER>g', 'n')
-
-  nmap <silent> <LEADER>g <Plug>(golden_ratio_resize)
-endif
 
 nnoremap <Plug>(golden_ratio_resize) :<C-u>call <SID>resize_to_golden_ratio()<CR>
 inoremap <Plug>(golden_ratio_resize) <Esc>:call <SID>resize_to_golden_ratio()<CR>a
