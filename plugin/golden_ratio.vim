@@ -6,6 +6,13 @@ if exists("g:loaded_golden_ratio")
 endif
 let g:loaded_golden_ratio = 1
 
+if !exists("g:golden_ratio_autocommand")
+  let s:gr_auto = 1
+else
+  let s:gr_auto = g:golden_ratio_autocommand
+  unlet g:golden_ratio_autocommand
+endif
+
 function! s:golden_ratio_width()
   return &columns / 1.618
 endfunction
@@ -100,16 +107,35 @@ function! s:resize_to_golden_ratio()
   call s:resize_main_window(winnr(), l:aw, l:ah, l:bw, l:bh)
 endfunction
 
+function! s:toggle_global_golden_ratio()
+  if s:gr_auto
+    let s:gr_auto = 0
+    au! goldenRatio
+  else
+    let s:gr_auto = 1
+    call <SID>initiate_golden_ratio()
+    call <SID>resize_to_golden_ratio()
+  endif
+endfunction
+
+function! s:initiate_golden_ratio()
+  if s:gr_auto
+    aug goldenRatio
+      au!
+      au WinEnter,BufEnter * call <SID>resize_to_golden_ratio()
+    aug END
+  endif
+endfunction
+
 " Do plugin mappings
 
 nnoremap <Plug>(golden_ratio_resize) :<C-u>call <SID>resize_to_golden_ratio()<CR>
 inoremap <Plug>(golden_ratio_resize) <Esc>:call <SID>resize_to_golden_ratio()<CR>a
+nnoremap <Plug>(golden_ratio_toggle) :<C-u>call <SID>toggle_global_golden_ratio()<CR>
+inoremap <Plug>(golden_ratio_toggle) <Esc>:call <SID>toggle_global_golden_ratio()<CR>a
 
-if !exists("g:golden_ratio_autocommand") ||
-      \ (exists("g:golden_ratio_autocommand") &&
-      \  g:golden_ratio_autocommand)
-
-  au WinEnter,BufEnter * call <SID>resize_to_golden_ratio()
-endif
+call <SID>initiate_golden_ratio()
 
 let &cpo = s:save_cpo
+
+" vim:et:ts=2:sw=2:sts=2
