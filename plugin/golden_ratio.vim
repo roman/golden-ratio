@@ -110,7 +110,7 @@ endfunction
 function! s:toggle_global_golden_ratio()
   if s:gr_auto
     let s:gr_auto = 0
-    au! goldenRatio
+    au! GoldenRatioAug
   else
     let s:gr_auto = 1
     call <SID>initiate_golden_ratio()
@@ -120,7 +120,7 @@ endfunction
 
 function! s:initiate_golden_ratio()
   if s:gr_auto
-    aug goldenRatio
+    aug GoldenRatioAug
       au!
       au WinEnter,BufEnter * call <SID>resize_to_golden_ratio()
     aug END
@@ -133,6 +133,12 @@ nnoremap <Plug>(golden_ratio_resize) :<C-u>call <SID>resize_to_golden_ratio()<CR
 inoremap <Plug>(golden_ratio_resize) <Esc>:call <SID>resize_to_golden_ratio()<CR>a
 nnoremap <Plug>(golden_ratio_toggle) :<C-u>call <SID>toggle_global_golden_ratio()<CR>
 inoremap <Plug>(golden_ratio_toggle) <Esc>:call <SID>toggle_global_golden_ratio()<CR>a
+
+command! GoldenRatioResize call <SID>resize_to_golden_ratio()
+command! GoldenRatioToggle call <SID>toggle_global_golden_ratio()
+
+cabbrev grresize GoldenRatioResize
+cabbrev grtoggle GoldenRatioToggle
 
 call <SID>initiate_golden_ratio()
 
