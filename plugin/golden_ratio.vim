@@ -13,6 +13,10 @@ else
   unlet g:golden_ratio_autocommand
 endif
 
+function! s:local_wrap()
+  return &l:wrap ? 'wrap' : 'nowrap'
+endfunction
+
 function! s:golden_ratio_width()
   return &columns / 1.618
 endfunction
@@ -33,6 +37,7 @@ function! s:find_parallel_windows(current_window)
 endfunction
 
 function! s:resize_ignored_window(windows, ignored_width, ignored_height)
+  call extend(s:lwrap, {bufname('%'):s:local_wrap()}, 'keep')
   setl nowrap
 
   if len(a:windows.width) > 0 && index(a:windows.width, winnr()) >= 0
@@ -67,6 +72,7 @@ endfunction
 function! s:resize_main_window(window,
       \ main_width, main_height,
       \ ignored_width, ignored_height)
+  call extend(s:lwrap, {bufname('%'):s:local_wrap()}, 'keep')
   setl wrap
 
   " Height has an special condition:
@@ -111,6 +117,11 @@ function! s:toggle_global_golden_ratio()
   if s:gr_auto
     let s:gr_auto = 0
     au! GoldenRatioAug
+    let currbuf = bufnr("%")
+    bufdo if match(keys(s:lwrap), bufname('%')) >= 0
+          \ | exe 'setl '.s:lwrap[bufname('%')]
+          \ | endif
+    exe 'buffer ' . currbuf
   else
     let s:gr_auto = 1
     call <SID>initiate_golden_ratio()
@@ -119,6 +130,7 @@ function! s:toggle_global_golden_ratio()
 endfunction
 
 function! s:initiate_golden_ratio()
+  let s:lwrap = {}
   if s:gr_auto
     aug GoldenRatioAug
       au!
