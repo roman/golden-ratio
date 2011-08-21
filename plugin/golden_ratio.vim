@@ -121,7 +121,7 @@ function! s:toggle_global_golden_ratio()
 
     let currbuf = bufnr("%")
     bufdo if match(keys(s:lwrap), bufname('%')) >= 0
-          \ | exe 'setl '.s:lwrap[bufname('%')]
+          \ | exe 'setl '.s:lwrap[bufname("%")]
           \ | endif
     exe 'buffer ' . currbuf
 
