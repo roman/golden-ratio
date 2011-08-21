@@ -37,7 +37,6 @@ function! s:find_parallel_windows(current_window)
 endfunction
 
 function! s:resize_ignored_window(windows, ignored_width, ignored_height)
-  call extend(s:lwrap, {bufname('%'):s:local_wrap()}, 'keep')
   setl nowrap
 
   if len(a:windows.width) > 0 && index(a:windows.width, winnr()) >= 0
@@ -72,7 +71,6 @@ endfunction
 function! s:resize_main_window(window,
       \ main_width, main_height,
       \ ignored_width, ignored_height)
-  call extend(s:lwrap, {bufname('%'):s:local_wrap()}, 'keep')
   setl wrap
 
   " Height has an special condition:
@@ -109,6 +107,9 @@ function! s:resize_to_golden_ratio()
   let l:bw = l:aw / 1.618
 
   let l:parallel_windows = s:find_parallel_windows(winnr())
+
+  call extend(s:lwrap, {bufname('%'):s:local_wrap()}, 'keep')
+
   call s:resize_ignored_windows(l:parallel_windows, l:bw, l:bh)
   call s:resize_main_window(winnr(), l:aw, l:ah, l:bw, l:bh)
 endfunction
@@ -117,11 +118,22 @@ function! s:toggle_global_golden_ratio()
   if s:gr_auto
     let s:gr_auto = 0
     au! GoldenRatioAug
+
     let currbuf = bufnr("%")
     bufdo if match(keys(s:lwrap), bufname('%')) >= 0
           \ | exe 'setl '.s:lwrap[bufname('%')]
           \ | endif
     exe 'buffer ' . currbuf
+
+    if len(s:winlayout) == winnr('$')
+          \ && &lines == s:vimsize[0] && &columns == s:vimsize[1]
+      let currwin = winnr()
+      windo if match(keys(s:winlayout), winnr()) >= 0
+            \ | exe 'resize '.s:winlayout[winnr()][1]
+            \ | exe 'vertical resize '.s:winlayout[winnr()][0]
+            \ | endif
+      exe currwin . 'winc w'
+    endif
   else
     let s:gr_auto = 1
     call <SID>initiate_golden_ratio()
@@ -131,6 +143,13 @@ endfunction
 
 function! s:initiate_golden_ratio()
   let s:lwrap = {}
+  let s:winlayout = {}
+  let s:vimsize = [&lines,&columns]
+
+  let currwin = winnr()
+  windo call extend(s:winlayout, {winnr():[winwidth(0),winheight(0)]})
+  exe currwin . 'winc w'
+
   if s:gr_auto
     aug GoldenRatioAug
       au!
