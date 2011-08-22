@@ -119,9 +119,12 @@ function! s:toggle_global_golden_ratio()
     let s:gr_auto = 0
     au! GoldenRatioAug
 
-    let currbuf = bufnr("%")
-    bufdo if match(keys(s:lwrap), bufname('%')) >= 0
-          \ | exe 'setl '.s:lwrap[bufname("%")]
+    let currbuf = bufnr('%')
+    bufdo let bufname = bufname('%')
+          \ | if !empty(bufname)
+            \ | if match(keys(s:lwrap), bufname) >= 0
+              \ | exe 'setl '.s:lwrap[bufname]
+            \ | endif
           \ | endif
     exe 'buffer ' . currbuf
 
