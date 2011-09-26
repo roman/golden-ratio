@@ -1,1 +1,109 @@
-<h1>Hello World</h1>
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>golden-ratio vim plugin</title>
+    <link href='http://fonts.googleapis.com/css?family=IM+Fell+Great+Primer' 
+          rel='stylesheet' 
+          type='text/css'>
+    <style type="text/css">
+      body {
+        font-family: Georgia, Palatino, sans-serif;
+        font-size: 20px;
+      }
+      h1 { font-size: 60px; margin-bottom: 0; } 
+      h2 { text-align: center; font-size: 25px; text-transform: uppercase; }
+      h3 { font-size: 25px; color: gray; margin-top: 0; }
+      h1, h2, h3 { 
+        font-family: 'IM Fell Great Primer', serif;
+      }
+      header { text-align: center; }
+      a { font-family: 'IM Fell Great Primer', serif; font-style: underline; }
+      p { line-height: 1.3em; }
+      dt { margin-top: 50px; font-size: 30px; color: #4A4A4A; font-family: 'IM Fell Great Primer', serif; } 
+      dd { margin-top: 20px; margin-left: 0; }
+      dd pre { margin-top: 5px; margin-bottom: 0; }
+      pre code { text-align: left; }
+      #wrapper { width: 800px; margin: auto; }
+      section { padding: 5px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>golden-ratio.vim</h1>
+      <h3>Automatic Window Re-sizing</h3>
+    </header>
+    <div id="wrapper">
+      <section class="intro">
+        <h2>Intro</h2>
+        <p>
+        This plugin resizes automatically the windows of your editor to
+        the size specified in the 
+        <a href="http://en.wikipedia.org/wiki/Golden_ratio">Golden Ratio</a>. 
+        The window that has the
+        main focus will have the perfect size for editing, while the ones that are
+        not being actively edited will be re-sized to a smaller size that doesn't get
+        in the way, yet at the same time will be readable enough to know it's content.
+        </p>
+      </section>
+      <section class="options">
+        <h2>Options</h2>
+        <dl>
+
+          <dt>g:loaded_golden_ratio</dt>
+          <dd>
+            Use this option to disable the plugin completely. 
+            <pre><code>
+let g:loaded_golden_ratio = 1 
+            </code></pre>
+          </dd>
+
+          <dt>g:golden_ratio_autocommand</dt>
+          <dd>
+            Use this option to disable automatic re-sizing when
+            moving between windows
+            <pre><code>
+let g:golden_ratio_autocommand = 0
+            </code></pre>
+        </dl>
+      </section>
+      <section class="commands">
+        <h2>Commands</h2>
+        <dl>
+          <dt>:GoldenRatioToggle</dt>
+          <dd>This will switch on and off the automatic window re-sizing</dd>
+
+          <dt>:GoldenRatioResize</dt>
+          <dd>When the automatic window re-sizing is off and this command
+            is called, the active window will be re-sized to the Golden Ratio
+            size
+          </dd>
+        </dl>
+      </section>
+      <section class="credits">
+        <h2>Credits</h2>
+        <p>
+          This plugin was developed by 
+          <a href="http://blog.romanandreg.com">Roman Gonzalez</a>, 
+          if you have any suggestions on how to improve the code/functionality 
+          please send an issue or a pull request to 
+          <a href="http://github.com/roman/golden-ratio">the github repo</a>
+        </p>
+
+        <p>
+          Thanks particuarly to <a href="http://github.com/ujihisa">ujihisa</a> 
+          for the inspiration to develop this plugin, 
+          and 
+          <a href="http://github.com/kien">kien</a> 
+          for making this plugin a better one
+        </p>
+      </section>
+      <section class="license">
+        <h2>License</h2>
+        <p>
+        This plugin is relased under the 
+        <a href="http://github.com/roman/golden-ratio/blob/master/LICENSE">MIT license</a>.
+        </p>
+      </section>
+    </div>
+  </body>
+</html>
