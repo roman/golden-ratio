@@ -33,8 +33,6 @@ function! s:find_parallel_windows(current_window)
 endfunction
 
 function! s:resize_ignored_window(windows, ignored_width, ignored_height)
-  setl nowrap
-
   if len(a:windows.width) > 0 && index(a:windows.width, winnr()) >= 0
     let l:width_size = a:ignored_width / len(a:windows.width)
     exec printf("vertical resize %f", l:width_size)
@@ -67,7 +65,6 @@ endfunction
 function! s:resize_main_window(window,
       \ main_width, main_height,
       \ ignored_width, ignored_height)
-  setl wrap
 
   " Height has an special condition:
   " When there is only one window, or just windows
