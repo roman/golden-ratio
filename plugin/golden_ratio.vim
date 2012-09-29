@@ -13,6 +13,10 @@ else
   unlet g:golden_ratio_autocommand
 endif
 
+if !exists('g:golden_ratio_wrap_ignored')
+  let g:golden_ratio_wrap_ignored = 0
+endif
+
 function! s:golden_ratio_width()
   return &columns / 1.618
 endfunction
@@ -33,7 +37,7 @@ function! s:find_parallel_windows(current_window)
 endfunction
 
 function! s:resize_ignored_window(windows, ignored_width, ignored_height)
-  setl nowrap
+  let l:wrap = g:golden_ratio_wrap_ignored
 
   if len(a:windows.width) > 0 && index(a:windows.width, winnr()) >= 0
     let l:width_size = a:ignored_width / len(a:windows.width)
