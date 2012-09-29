@@ -98,7 +98,7 @@ function! s:resize_main_window(window,
 endfunction
 
 function! s:resize_to_golden_ratio()
-  if exists("b:golden_ration_resizing_ignored") &&
+  if exists("b:golden_ratio_resizing_ignored") &&
         \ b:golden_ratio_resizing_ignored
     return
   endif
