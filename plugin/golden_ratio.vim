@@ -67,7 +67,10 @@ endfunction
 function! s:resize_main_window(window,
       \ main_width, main_height,
       \ ignored_width, ignored_height)
-  setl wrap
+  if exists('&b:golden_ratio_saved_wrap')
+    " restore previously saved state
+    let l:wrap = b:golden_ratio_saved_wrap
+  endif
 
   " Height has an special condition:
   " When there is only one window, or just windows
@@ -123,6 +126,7 @@ function! s:initiate_golden_ratio()
     aug GoldenRatioAug
       au!
       au WinEnter,BufEnter * call <SID>resize_to_golden_ratio()
+      au BufLeave * let b:golden_ratio_saved_wrap = &wrap
     aug END
   endif
 endfunction
