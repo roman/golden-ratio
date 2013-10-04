@@ -49,6 +49,15 @@ Use this option to set line wrapping of the ignored windows
   let g:golden_ratio_wrap_ignored = 0
 <
 
+                                         *'golden_ratio_exclude_nonmodifiable'*
+Use this option to keep all windows that have 'nomodifiable' option set
+untouched (off by default): >
+  let g:golden_ratio_exclude_nonmodifiable = 1
+<
+This is useful if you keep things like buffer explorer or tag list
+open. Note: Depending on the window layout this may not always work.
+
+
 ===============================================================================
 3. Commands                                             *golden-ratio-commands*
 
