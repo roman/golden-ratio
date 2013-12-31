@@ -145,7 +145,12 @@ function! s:initiate_golden_ratio()
   if s:gr_auto
     aug GoldenRatioAug
       au!
-      au WinEnter,BufEnter * call <SID>resize_to_golden_ratio()
+
+      if !exists("g:golden_ratio_filetypes_blacklist")
+        let g:golden_ratio_filetypes_blacklist = []
+      endif
+
+      au WinEnter,BufEnter * if index(g:golden_ratio_filetypes_blacklist, &ft) < 0 | call <SID>resize_to_golden_ratio() | endif
       au BufLeave * let b:golden_ratio_saved_wrap = &wrap
     aug END
   endif
