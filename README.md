@@ -18,7 +18,8 @@ Refer to `:help golden-ratio` for options.
 - With [pathogen.vim](https://github.com/tpope/vim-pathogen):
 
 ```
-cd ~/.vim/bundle git clone git://github.com/roman/golden-ratio.git
+cd ~/.vim/bundle 
+git clone git://github.com/roman/golden-ratio.git
 ```
 
 - With [Vundle](https://github.com/gmarik/vundle):
