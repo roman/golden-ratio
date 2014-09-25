@@ -49,7 +49,11 @@ function! s:find_parallel_windows(current_window)
 endfunction
 
 function! s:resize_ignored_window(windows, ignored_width, ignored_height)
-  let l:wrap = g:golden_ratio_wrap_ignored
+  if !exists('b:golden_ratio_saved_wrap')
+    let b:golden_ratio_saved_wrap = &wrap
+  endif
+
+  let &l:wrap = g:golden_ratio_wrap_ignored
 
   if len(a:windows.width) > 0 && index(a:windows.width, winnr()) >= 0
     let l:width_size = a:ignored_width / len(a:windows.width)
@@ -83,9 +87,9 @@ endfunction
 function! s:resize_main_window(window,
       \ main_width, main_height,
       \ ignored_width, ignored_height)
-  if exists('&b:golden_ratio_saved_wrap')
+  if exists('b:golden_ratio_saved_wrap')
     " restore previously saved state
-    let l:wrap = b:golden_ratio_saved_wrap
+    let &l:wrap = b:golden_ratio_saved_wrap
   endif
 
   " Height has an special condition:

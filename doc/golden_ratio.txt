@@ -44,8 +44,8 @@ Use this option to disable the autocommand events for golden ratio
 <
 
                                                   *'golden_ratio_wrap_ignored'*
-Use this option to set line wrapping of the ignored windows
-(off by default): >
+Sets whether 'wrap' is enabled (1) or disabled (0) in ignored windows:
+>
   let g:golden_ratio_wrap_ignored = 0
 <
 
