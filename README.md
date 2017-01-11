@@ -7,7 +7,9 @@ golden-ratio helps on this issue by resizing automatically the windows you are w
 being actively edited will be re-sized to a smaller size that doesn't get in the way, but at the same time will be
 readable enough to know it's content.
 
-For more info about the golden ratio check out http://en.wikipedia.org/wiki/Golden_ratio
+![Example of autocmd resizing.](https://camo.githubusercontent.com/55aac943a3c4a0f24c7095ab83c7383c542ef7b1/687474703a2f2f692e696d6775722e636f6d2f456352465739642e676966)
+
+For more info about the golden ratio check out [Golden Ratio on Wikipedia](http://en.wikipedia.org/wiki/Golden_ratio).
 
 ## Options
 
