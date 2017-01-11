@@ -33,7 +33,7 @@ Bundle 'roman/golden-ratio'
 ## Credits
 
 This plugin was developed by Roman Gonzalez (romanandreg [at] gmail.com), if you have any suggestions to improve the
-code/functionality please send an email or even better, send a pull request to the github repo:
+code/functionality please send a pull request to the github repo:
 
 http://github.com/roman/golden-ratio
 
