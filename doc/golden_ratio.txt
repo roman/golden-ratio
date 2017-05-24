@@ -34,7 +34,7 @@ http://en.wikipedia.org/wiki/Golden_ratio
 
                                                         *'loaded-golden-ratio'*
 Use this option to disable golden-ratio plugin completely: >
-  let g:loaded_golden_ratio = 1
+  let g:loaded_golden_ratio = 0
 <
 
                                                    *'golden_ratio_autocommand'*
@@ -44,9 +44,10 @@ Use this option to disable the autocommand events for golden ratio
 <
 
                                                   *'golden_ratio_wrap_ignored'*
-Sets whether 'wrap' is enabled (1) or disabled (0) in ignored windows:
+Sets whether 'wrap' is enabled (1) or disabled (0) in ignored windows (0 by
+default):
 >
-  let g:golden_ratio_wrap_ignored = 0
+  let g:golden_ratio_wrap_ignored = 1
 <
 
                                          *'golden_ratio_exclude_nonmodifiable'*
