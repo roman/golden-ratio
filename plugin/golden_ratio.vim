@@ -21,6 +21,10 @@ if !exists('g:golden_ratio_exclude_nonmodifiable')
   let g:golden_ratio_exclude_nonmodifiable = 0
 endif
 
+if !exists("g:golden_ratio_filetypes_blacklist")
+  let g:golden_ratio_filetypes_blacklist = []
+endif
+
 function! s:golden_ratio_width()
   return &columns / 1.618
 endfunction
@@ -113,7 +117,28 @@ function! s:resize_main_window(window,
   exec l:height
 endfunction
 
-function! s:resize_to_golden_ratio()
+function! s:resize_window(filetype, resize, size)
+    let l:currentWin = winnr()
+    let l:bufmap = map(range(1, winnr('$')), '[(getbufvar(winbufnr(v:val), "&ft")), v:val]')
+    let l:thewindow = filter(l:bufmap, 'v:val[0] =~ a:filetype')
+
+    if len(thewindow) < 1
+      return
+    endif
+
+    let l:size = a:resize =~ 'vertical' ? &columns : &lines
+    exec printf("%d wincmd w", l:thewindow[0][1])
+    exec printf("%s %f", a:resize, (l:size * (0.01 * a:size)))
+    exec printf("%d wincmd w", l:currentWin)
+endfunction
+
+function! s:resize_fixed_windows()
+  for [filter, params] in items(g:golden_ratio_fixed_size)
+      call s:resize_window(filter, params.resize, params.size)
+  endfor
+endfunction
+
+function! s:resize_to_golden_ratio(...)
   if exists("b:golden_ratio_resizing_ignored") &&
         \ b:golden_ratio_resizing_ignored
     return
@@ -132,6 +157,7 @@ function! s:resize_to_golden_ratio()
   let l:parallel_windows = s:find_parallel_windows(winnr())
   call s:resize_ignored_windows(l:parallel_windows, l:bw, l:bh)
   call s:resize_main_window(winnr(), l:aw, l:ah, l:bw, l:bh)
+  call s:resize_fixed_windows()
 endfunction
 
 function! s:toggle_global_golden_ratio()

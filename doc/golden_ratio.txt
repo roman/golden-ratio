@@ -60,6 +60,12 @@ untouched (off by default): >
 This is useful if you keep things like buffer explorer or tag list
 open. Note: Depending on the window layout this may not always work.
 
+                                         *'golden_ratio_filetypes_blacklist'*
+Use this option to keep windows at a fixed size. >
+  let g:golden_ratio_fixed_size = {
+  \       'nerdtree': { 'resize': 'vertical resize', 'size': 15 },
+  \       'qf': { 'resize': 'resize', 'size': 5 },
+  \ }
 
 ===============================================================================
 3. Commands                                             *golden-ratio-commands*
