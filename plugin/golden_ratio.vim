@@ -21,12 +21,16 @@ if !exists('g:golden_ratio_exclude_nonmodifiable')
   let g:golden_ratio_exclude_nonmodifiable = 0
 endif
 
+if !exists('g:golden_ratio_constant')
+  let g:golden_ratio_constant = 1.618
+endif
+
 function! s:golden_ratio_width()
-  return &columns / 1.618
+  return &columns / g:golden_ratio_constant
 endfunction
 
 function! s:golden_ratio_height()
-  return &lines / 1.618
+  return &lines / g:golden_ratio_constant
 endfunction
 
 function! s:window_list()
@@ -124,10 +128,10 @@ function! s:resize_to_golden_ratio()
   endif
 
   let l:ah = s:golden_ratio_height()
-  let l:bh = l:ah / 1.618
+  let l:bh = l:ah / g:golden_ratio_constant
 
   let l:aw = s:golden_ratio_width()
-  let l:bw = l:aw / 1.618
+  let l:bw = l:aw / g:golden_ratio_constant
 
   let l:parallel_windows = s:find_parallel_windows(winnr())
   call s:resize_ignored_windows(l:parallel_windows, l:bw, l:bh)
