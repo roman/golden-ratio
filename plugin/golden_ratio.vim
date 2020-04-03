@@ -123,6 +123,12 @@ function! s:resize_to_golden_ratio()
     return
   endif
 
+  " Prevent "E11: Invalid in command-line window". We cannot leave cmdwin to
+  " resize windows, so abort.
+  if exists('*getcmdwintype') && !empty(getcmdwintype())
+    return
+  endif
+
   let l:ah = s:golden_ratio_height()
   let l:bh = l:ah / 1.618
 
