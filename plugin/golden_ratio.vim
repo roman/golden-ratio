@@ -21,8 +21,8 @@ if !exists('g:golden_ratio_exclude_nonmodifiable')
   let g:golden_ratio_exclude_nonmodifiable = 0
 endif
 
-if !exists("g:golden_ratio_filetypes_exclude")
-  let g:golden_ratio_filetypes_exclude = []
+if !exists("g:golden_ratio_exclude_filetypes")
+  let g:golden_ratio_exclude_filetypes = []
 endif
 
 function! s:golden_ratio_width()
@@ -159,8 +159,8 @@ function! s:initiate_golden_ratio()
   if s:gr_auto
     aug GoldenRatioAug
       au!
-      au WinEnter,BufEnter * if index(g:golden_ratio_filetypes_exclude, &ft) < 0 | call <SID>resize_to_golden_ratio() | endif
-      au BufLeave * if index(g:golden_ratio_filetypes_exclude, &ft) < 0 | let b:golden_ratio_saved_wrap = &wrap | endif
+      au WinEnter,BufEnter * if index(g:golden_ratio_exclude_filetypes, &ft) < 0 | call <SID>resize_to_golden_ratio() | endif
+      au BufLeave * if index(g:golden_ratio_exclude_filetypes, &ft) < 0 | let b:golden_ratio_saved_wrap = &wrap | endif
     aug END
   endif
 endfunction
