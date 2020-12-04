@@ -127,6 +127,10 @@ function! s:resize_to_golden_ratio()
     return
   endif
 
+  if index(g:golden_ratio_exclude_filetypes, &ft) > 0
+    return
+  endif
+
   " Prevent "E11: Invalid in command-line window". We cannot leave cmdwin to
   " resize windows, so abort.
   if exists('*getcmdwintype') && !empty(getcmdwintype())
@@ -159,8 +163,8 @@ function! s:initiate_golden_ratio()
   if s:gr_auto
     aug GoldenRatioAug
       au!
-      au WinEnter,BufEnter * if index(g:golden_ratio_exclude_filetypes, &ft) < 0 | call <SID>resize_to_golden_ratio() | endif
-      au BufLeave * if index(g:golden_ratio_exclude_filetypes, &ft) < 0 | let b:golden_ratio_saved_wrap = &wrap | endif
+      au WinEnter,BufEnter * call <SID>resize_to_golden_ratio()
+      au BufLeave * let b:golden_ratio_saved_wrap = &wrap
     aug END
   endif
 endfunction
