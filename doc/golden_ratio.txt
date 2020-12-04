@@ -61,6 +61,12 @@ This is useful if you keep things like buffer explorer or tag list
 open. Note: Depending on the window layout this may not always work.
 
 
+                                         *'golden_ratio_filetypes_blacklist'*
+Use this option to keep all windows that have 'nomodifiable' option set
+untouched (off by default): >
+  let g:golden_ratio_filetypes_blacklist = ["nerdtree", "unite"]
+<
+
 ===============================================================================
 3. Commands                                             *golden-ratio-commands*
 
