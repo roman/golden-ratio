@@ -21,6 +21,10 @@ if !exists('g:golden_ratio_exclude_nonmodifiable')
   let g:golden_ratio_exclude_nonmodifiable = 0
 endif
 
+if !exists("g:golden_ratio_exclude_filetypes")
+  let g:golden_ratio_exclude_filetypes = []
+endif
+
 function! s:golden_ratio_width()
   return &columns / 1.618
 endfunction
@@ -120,6 +124,10 @@ function! s:resize_to_golden_ratio()
   endif
 
   if g:golden_ratio_exclude_nonmodifiable && !&modifiable
+    return
+  endif
+
+  if index(g:golden_ratio_exclude_filetypes, &ft) > 0
     return
   endif
 
