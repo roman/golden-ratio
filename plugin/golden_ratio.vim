@@ -114,6 +114,11 @@ function! s:resize_main_window(window,
 endfunction
 
 function! s:resize_to_golden_ratio()
+
+  if win_gettype(winnr()) == 'popup'
+    return
+  endif
+
   if exists("b:golden_ratio_resizing_ignored") &&
         \ b:golden_ratio_resizing_ignored
     return
