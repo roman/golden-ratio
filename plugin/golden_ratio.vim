@@ -115,7 +115,7 @@ endfunction
 
 function! s:resize_to_golden_ratio()
 
-  if win_gettype(winnr()) == 'popup'
+  if exists('*win_gettype') && win_gettype(winnr()) == 'popup'
     return
   endif
 
